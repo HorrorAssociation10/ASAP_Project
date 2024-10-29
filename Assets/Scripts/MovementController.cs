@@ -17,6 +17,7 @@ public class MovementController : MonoBehaviour
     [Header("Gravity Settings")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private CircleCollider2D groundCollider;
+    [SerializeField] private bool MoveInAir;
 
     private Rigidbody2D body;
     private ContactFilter2D groundFilter;
@@ -53,11 +54,16 @@ public class MovementController : MonoBehaviour
             body.AddForce(JumpSpeed * Vector2.up, ForceMode2D.Impulse);
         }
         isJump = false;
-        
-        if (isGrounded)
+
+        if (!(MoveInAir))
         {
-            body.AddForce(movementInput * Vector2.right * Speed);
+            if (isGrounded)
+            {
+                body.AddForce(movementInput * Vector2.right * Speed);
+            }
         }
+        else
+            body.AddForce(movementInput * Vector2.right * Speed);
     }
     private void GroundCheck()
     {
