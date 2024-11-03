@@ -9,6 +9,6 @@ public class TransformMovement : MonoBehaviour
     private void FixedUpdate()
     {
         value = value + Time.fixedDeltaTime;
-        transform.position = Mathf.Sin(value) * Vector2.one*5;
+        transform.localPosition = Mathf.Sin(value) * Vector2.right*5;
     }
 }

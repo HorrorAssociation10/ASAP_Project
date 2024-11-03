@@ -8,6 +8,9 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text ScoreText;
     [SerializeField] private List<PickupObjects> pickupObjectsList;
+    [SerializeField] private List<Enemy> enemiesList;
+    [SerializeField] private LevelHUD levelHUD;
+    [SerializeField] private Spikes spikes;
 
     private LevelProgress progress;
 
@@ -15,16 +18,23 @@ public class LevelManager : MonoBehaviour
     {
         progress = new LevelProgress();
         pickupObjectsList = FindObjectsOfType<PickupObjects>().ToList();
+        enemiesList = FindObjectsOfType<Enemy>().ToList();
+        ScoreText.text = $"Health: {progress.LevelScore}";
 
-        foreach (PickupObjects pickupObjects in pickupObjectsList)
+        foreach (PickupObjects pickupObject in pickupObjectsList)
         {
-            pickupObjects.SetLevelManager(this);
+            pickupObject.SetLevelManager(this);
         }
+        foreach (Enemy enemy in enemiesList)
+        {
+            enemy.SetLevelManager(this);
+        }
+        spikes.SetLevelManager(this);
     }
 
     public void UpdateScore(int score)
     {
         progress.LevelScore += score;
-        ScoreText.text = score.ToString();
+        levelHUD.UpdateScore(progress.LevelScore);
     }
 }

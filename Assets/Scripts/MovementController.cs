@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,13 +19,17 @@ public class MovementController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private CircleCollider2D groundCollider;
     [SerializeField] private bool MoveInAir;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
 
     private Rigidbody2D body;
+    private Transform tf;
     private ContactFilter2D groundFilter;
 
     private bool isJump;
     private Vector2 movementInput;
     private bool isGrounded;
+    private float walking;
 
     private void Awake()
     {
@@ -40,6 +45,7 @@ public class MovementController : MonoBehaviour
     public void OnMove(InputValue input)
     {
         movementInput = input.Get<Vector2>().normalized;
+        walking = Math.Abs(movementInput.x);
     }
     private void OnJump()
     {
@@ -49,6 +55,10 @@ public class MovementController : MonoBehaviour
     private void FixedUpdate()
     {
         GroundCheck();
+        SideCheck();
+        animator.SetFloat("Speed", walking);
+        animator.SetBool("Jump", isJump);
+        animator.SetBool("Grounded", isGrounded);
         if (isJump && isGrounded)
         {
             body.AddForce(JumpSpeed * Vector2.up, ForceMode2D.Impulse);
@@ -64,6 +74,17 @@ public class MovementController : MonoBehaviour
         }
         else
             body.AddForce(movementInput * Vector2.right * Speed);
+    }
+    private void SideCheck()
+    {
+        if (movementInput.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        if (movementInput.x > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
     }
     private void GroundCheck()
     {

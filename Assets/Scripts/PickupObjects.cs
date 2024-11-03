@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PickupObjects : MonoBehaviour
 {
     [SerializeField] private int PickupScore = 1;
+    [SerializeField] private bool ObjectTaken;
 
     private LevelManager levelManager;
 
@@ -12,14 +14,15 @@ public class PickupObjects : MonoBehaviour
     {
         this.levelManager = levelManager;
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out var player))
+        var InpSys = collision.GetComponent<InputSystemController>();
+        if (collision.TryGetComponent<Player>(out var player)&&InpSys.TookObject)
         {
             levelManager.UpdateScore(PickupScore);
             gameObject.SetActive(false);
             Debug.Log("Health increased by 1");
+            InpSys.TookObject = false;
         }
     }
 }
