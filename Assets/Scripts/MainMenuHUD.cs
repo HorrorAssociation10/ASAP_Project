@@ -5,31 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LevelHUD : MonoBehaviour
+public class MainMenuHUD : MonoBehaviour
 {
     [SerializeField] private LevelManager levelManager;
     [Header("UI")]
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Button reloadButton;
+    [SerializeField] private Button newGameButton;
 
     private readonly UICommandQueue commandQueue = new UICommandQueue();
 
-    public void UpdateScore(int NewScore)
-    {
-        commandQueue.TryEnqueueCommand(new UpdateScoreCommand(NewScore));
-    }
-    public void GameOver()
-    {
-        commandQueue.TryEnqueueCommand(new GameOverCommand());
-    }
-    public void NewGame()
-    {
-        commandQueue.TryEnqueueCommand(new NewGameCommand());
-    }
     private void Start()
     {
         Debug.Log("void Start executed");
         reloadButton.onClick.AddListener(() => commandQueue.TryEnqueueCommand(new ReloadCommand()));
+        newGameButton.onClick.AddListener(() => commandQueue.TryEnqueueCommand(new NewGameCommand()));
         StartCoroutine(UpdateTask());
     }
     private void OnDestroy()
@@ -45,11 +35,6 @@ public class LevelHUD : MonoBehaviour
             {
                 switch (command)
                 {
-                    case UpdateScoreCommand update:
-                        {
-                            scoreText.text = $"Health: {update.NewScore}";
-                            break;
-                        }
                     case ReloadCommand _:
                         {
                             var currentScene = SceneManager.GetActiveScene();
@@ -59,11 +44,6 @@ public class LevelHUD : MonoBehaviour
                     case NewGameCommand newgame:
                         {
                             SceneManager.LoadSceneAsync("PreHistory");
-                            break;
-                        }
-                    case GameOverCommand gameover:
-                        {
-                            SceneManager.LoadSceneAsync("GameOver");
                             break;
                         }
                     default:

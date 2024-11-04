@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class LevelProgress : MonoBehaviour
 {
-    public int LevelScore = 2;
+    public int LevelScore = 6;
 }

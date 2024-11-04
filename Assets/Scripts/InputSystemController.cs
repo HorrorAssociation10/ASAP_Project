@@ -5,6 +5,7 @@ public class InputSystemController : MonoBehaviour
 {
     [SerializeField] private AudioSource Balalaika;
     [SerializeField] public bool TookObject = false;
+    [SerializeField] public bool NearCheck = false;
 
     public void OnStrum()
     {
@@ -13,9 +14,12 @@ public class InputSystemController : MonoBehaviour
 
     }
     public void OnTake()
-    {
-        TookObject = true;
-        Debug.Log("F Pressed");
+    { if (NearCheck)
+        {
+            TookObject = true;
+        }
+        else
+            Debug.Log("F Pressed, but nothing happened");
     }
     private void FixedUpdate()
     {

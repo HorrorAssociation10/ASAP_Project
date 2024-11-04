@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PickupObjects : MonoBehaviour
 {
-    [SerializeField] private int PickupScore = 1;
+    [SerializeField] private int PickupScore = 3;
     [SerializeField] private bool ObjectTaken;
 
     private LevelManager levelManager;
@@ -17,12 +17,22 @@ public class PickupObjects : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         var InpSys = collision.GetComponent<InputSystemController>();
-        if (collision.TryGetComponent<Player>(out var player)&&InpSys.TookObject)
+        if (collision.TryGetComponent<Player>(out var player))
         {
-            levelManager.UpdateScore(PickupScore);
-            gameObject.SetActive(false);
-            Debug.Log("Health increased by 1");
-            InpSys.TookObject = false;
+            InpSys.NearCheck = true;
+            if (InpSys.TookObject)
+            {
+                levelManager.UpdateScore(PickupScore);
+                gameObject.SetActive(false);
+                Debug.Log($"Health increased by {PickupScore}");
+                InpSys.NearCheck = false;
+                InpSys.TookObject = false;
+            }
         }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        var InpSys = collision.GetComponent<InputSystemController>();
+        InpSys.NearCheck = false;
     }
 }

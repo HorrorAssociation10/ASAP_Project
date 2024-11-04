@@ -35,6 +35,9 @@ public class LevelManager : MonoBehaviour
     public void UpdateScore(int score)
     {
         progress.LevelScore += score;
+        if (progress.LevelScore>9) progress.LevelScore = 9;
         levelHUD.UpdateScore(progress.LevelScore);
+        if (progress.LevelScore <= 0)
+            levelHUD.GameOver();
     }
 }
