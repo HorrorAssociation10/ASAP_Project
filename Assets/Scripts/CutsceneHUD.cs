@@ -12,7 +12,14 @@ public class CutsceneHUD : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Button reloadButton;
+    [SerializeField] private GameObject levelHudGameObject;
+    [SerializeField] private GameObject cutsceneHudGameObject;
     [SerializeField] private List<GameObject> dialoguesList;
+    [Header("Settings")]
+    [SerializeField] private int DialoguesAmount;
+    [SerializeField] private bool ChangeSceneOnFinish = false;
+    [SerializeField] private PlayerInput actualPlayerInput;
+
     private int currentDialogue = 1;
 
     private readonly UICommandQueue commandQueue = new UICommandQueue();
@@ -22,6 +29,10 @@ public class CutsceneHUD : MonoBehaviour
         Debug.Log("Dialogs begin!");
         reloadButton.onClick.AddListener(() => commandQueue.TryEnqueueCommand(new ReloadCommand()));
         StartCoroutine(NextDialogue());
+    }
+    public void EngageDialogue()
+    {
+        commandQueue.TryEnqueueCommand(new EngageDialogueCommand());
     }
     private void OnNextDialogue()
     {
@@ -42,48 +53,44 @@ public class CutsceneHUD : MonoBehaviour
             {
                 switch (command)
                 {
+                    case EngageDialogueCommand newone:
+                        {
+                            Debug.Log("Dialogue engaged!");
+                            actualPlayerInput.SwitchCurrentActionMap("SwitchDialogues");
+                            break;
+                        }
                     case NextDialogueCommand nextone:
                         {
-                            switch (currentDialogue)
+                            if (currentDialogue <= DialoguesAmount)
                             {
-                                case 1:
+                                foreach (GameObject dialogue in dialoguesList)
+                                {
+                                    dialogue.SetActive(false);
+                                }
+                                dialoguesList[currentDialogue - 1].SetActive(true);
+                            }
+                            else
+                            {
+                                if (ChangeSceneOnFinish)
+                                {
+                                    SceneManager.LoadSceneAsync("Level1");
+                                }
+                                else
+                                {
+                                    levelHudGameObject.SetActive(true);
+                                    cutsceneHudGameObject.SetActive(false);
+                                    actualPlayerInput.SwitchCurrentActionMap("Player");
+                                    foreach (GameObject dialogue in dialoguesList)
                                     {
-                                        foreach (GameObject dialogue in dialoguesList)
-                                        {
-                                            dialogue.SetActive(false);
-                                        }
-                                        dialoguesList[0].SetActive(true);
-                                        break;
+                                        dialogue.SetActive(false);
                                     }
-                                case 2:
-                                    {
-                                        foreach (GameObject dialogue in dialoguesList)
-                                        {
-                                            dialogue.SetActive(false);
-                                        }
-                                        dialoguesList[1].SetActive(true);
-                                        break;
-                                    }
-                                case 3:
-                                    {
-                                        foreach (GameObject dialogue in dialoguesList)
-                                        {
-                                            dialogue.SetActive(false);
-                                        }
-                                        dialoguesList[2].SetActive(true);
-                                        currentDialogue = 998;
-                                        break;
-                                    }
-                                case 999:
-                                    {
-                                        SceneManager.LoadSceneAsync("Level1");
-                                        break;
-                                    }
-                                default:
-                                    break;
+                                }
+
                             }
                             break;
                         }
+                    default:
+                        break;
                 }
             }
 

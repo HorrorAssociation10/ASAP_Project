@@ -7,6 +7,8 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private CircleCollider2D headColliderLeft;
     [SerializeField] private CircleCollider2D headColliderRight;
+    [SerializeField] private float movementAmplitude = 5;
+    [SerializeField] private float movementPeriod = 1;
     private float value;
     private Vector2 movement;
     private Transform tf;
@@ -20,16 +22,16 @@ public class EnemyMovement : MonoBehaviour
     private void FixedUpdate()
     {
         value = value + Time.fixedDeltaTime;
-        transform.localPosition = Mathf.Sin(value) * Vector2.right * 5;
+        transform.localPosition = Mathf.Sin(value*movementPeriod) * Vector2.right * movementAmplitude;
         Vector2 movement = transform.localPosition;
-        if (movement.x < -4.99)
+        if (movement.x < -movementAmplitude+0.01)
         {
             spriteRenderer.flipX = true;
             enemy.AttackForce.x = -1;
             headColliderLeft.enabled = false;
             headColliderRight.enabled = true;
         }
-        if (movement.x > 4.99)
+        if (movement.x > movementAmplitude-0.01)
         {
             spriteRenderer.flipX = false;
             enemy.AttackForce.x = 1;
