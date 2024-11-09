@@ -12,6 +12,7 @@ public class MainMenuHUD : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Button reloadButton;
     [SerializeField] private Button newGameButton;
+    [SerializeField] private string TargetScene;
 
     private readonly UICommandQueue commandQueue = new UICommandQueue();
 
@@ -21,6 +22,7 @@ public class MainMenuHUD : MonoBehaviour
         reloadButton.onClick.AddListener(() => commandQueue.TryEnqueueCommand(new ReloadCommand()));
         newGameButton.onClick.AddListener(() => commandQueue.TryEnqueueCommand(new NewGameCommand()));
         StartCoroutine(UpdateTask());
+        TargetScene = The.Instance.Checkpoint;
     }
     private void OnDestroy()
     {
@@ -43,7 +45,7 @@ public class MainMenuHUD : MonoBehaviour
                         }
                     case NewGameCommand newgame:
                         {
-                            SceneManager.LoadSceneAsync("PreHistory");
+                            SceneManager.LoadSceneAsync(TargetScene);
                             break;
                         }
                     default:

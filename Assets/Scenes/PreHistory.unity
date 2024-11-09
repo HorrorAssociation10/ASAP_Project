@@ -346,6 +346,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1755564124065179423, guid: 1392988160dcac44ca96b346fc5825b1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 546cdc0df0e25a541af2b78abe0ce406, type: 2}
+    - target: {fileID: 1755564124065179423, guid: 1392988160dcac44ca96b346fc5825b1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -1487064362281101314, guid: 546cdc0df0e25a541af2b78abe0ce406, type: 2}
+    - target: {fileID: 1755564124065179423, guid: 1392988160dcac44ca96b346fc5825b1, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2532872410168980867, guid: 1392988160dcac44ca96b346fc5825b1, type: 3}
       propertyPath: m_Name
       value: CutsceneHUD
@@ -429,6 +441,14 @@ PrefabInstance:
     - target: {fileID: 8454162293727233593, guid: 1392988160dcac44ca96b346fc5825b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8952340318783889276, guid: 1392988160dcac44ca96b346fc5825b1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 546cdc0df0e25a541af2b78abe0ce406, type: 2}
+    - target: {fileID: 8952340318783889276, guid: 1392988160dcac44ca96b346fc5825b1, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

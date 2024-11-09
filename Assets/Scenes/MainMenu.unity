@@ -243,6 +243,7 @@ MonoBehaviour:
   scoreText: {fileID: 0}
   reloadButton: {fileID: 1907626811}
   newGameButton: {fileID: 710368033}
+  TargetScene: PreHistory
 --- !u!1 &664051730
 GameObject:
   m_ObjectHideFlags: 0

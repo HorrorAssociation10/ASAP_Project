@@ -56,7 +56,6 @@ public class MovementController : MonoBehaviour
     {
         GroundCheck();
         SideCheck();
-        animator.SetFloat("Speed", walking);
         animator.SetBool("Jump", isJump);
         animator.SetBool("Grounded", isGrounded);
         if (isJump && isGrounded)
@@ -70,10 +69,20 @@ public class MovementController : MonoBehaviour
             if (isGrounded)
             {
                 body.AddForce(movementInput * Vector2.right * Speed);
+                animator.SetFloat("Speed", walking);
             }
         }
         else
-            body.AddForce(movementInput * Vector2.right * Speed);
+        {
+            if (isGrounded)
+            {
+                body.AddForce(movementInput * Vector2.right * Speed);
+                animator.SetFloat("Speed", walking);
+            }
+            else
+                body.AddForce(movementInput * Vector2.right * Speed);
+        }
+            
     }
     private void SideCheck()
     {

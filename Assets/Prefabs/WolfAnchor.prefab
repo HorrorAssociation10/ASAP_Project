@@ -157,6 +157,9 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7300563227699977378}
   headColliderLeft: {fileID: 4758784726437984063}
   headColliderRight: {fileID: 4982551738686780147}
+  movementAmplitude: 5
+  movementPeriod: 1
+  movement: {x: 0, y: 0}
 --- !u!212 &7300563227699977378
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -362,7 +365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8916343364130808461}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 37.46, y: -0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

@@ -5,38 +5,54 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private CircleCollider2D headColliderLeft;
-    [SerializeField] private CircleCollider2D headColliderRight;
+    [SerializeField] public CircleCollider2D headColliderLeft;
+    [SerializeField] public CircleCollider2D headColliderRight;
     [SerializeField] private float movementAmplitude = 5;
     [SerializeField] private float movementPeriod = 1;
+    private GameObject Anchor;
     private float value;
-    private Vector2 movement;
+    private float valueat;
+    public Vector2 movement;
     private Transform tf;
     private Enemy enemy;
+    private bool defeated = false;
 
     private void Awake()
     {
         enemy = GetComponent<Enemy>();
     }
-
+    public void OnDefeat()
+    {
+        valueat = 0;
+        defeated = true;
+    }
     private void FixedUpdate()
     {
-        value = value + Time.fixedDeltaTime;
-        transform.localPosition = Mathf.Sin(value*movementPeriod) * Vector2.right * movementAmplitude;
-        Vector2 movement = transform.localPosition;
-        if (movement.x < -movementAmplitude+0.01)
+        if (!defeated)
         {
-            spriteRenderer.flipX = true;
-            enemy.AttackForce.x = -1;
-            headColliderLeft.enabled = false;
-            headColliderRight.enabled = true;
+            value = value + Time.fixedDeltaTime;
+            transform.localPosition = Mathf.Sin(value * movementPeriod) * Vector2.right * movementAmplitude;
+            Vector2 movement = transform.localPosition;
+            if (movement.x < -movementAmplitude + 0.01)
+            {
+                spriteRenderer.flipX = true;
+                enemy.AttackForce.x = -1;
+                headColliderLeft.enabled = false;
+                headColliderRight.enabled = true;
+            }
+            if (movement.x > movementAmplitude - 0.01)
+            {
+                spriteRenderer.flipX = false;
+                enemy.AttackForce.x = 1;
+                headColliderRight.enabled = false;
+                headColliderLeft.enabled = true;
+            }
         }
-        if (movement.x > movementAmplitude-0.01)
+        if (defeated)
         {
             spriteRenderer.flipX = false;
-            enemy.AttackForce.x = 1;
-            headColliderRight.enabled = false;
-            headColliderLeft.enabled= true;
+            valueat = valueat + Time.fixedDeltaTime;
+            transform.localPosition = new Vector2 (transform.localPosition.x-(valueat * Vector2.right).x, (valueat * Vector2.right * 5).y);
         }
     }
 }

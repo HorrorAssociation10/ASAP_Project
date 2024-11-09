@@ -11,6 +11,8 @@ public class LevelHUD : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Button reloadButton;
+    [SerializeField] private Animator HealthBarAnim;
+    private GameObject HealthBar;
 
     private readonly UICommandQueue commandQueue = new UICommandQueue();
 
@@ -28,7 +30,8 @@ public class LevelHUD : MonoBehaviour
     }
     private void Start()
     {
-        Debug.Log("void Start executed");
+        HealthBar = gameObject.transform.GetChild(1).gameObject;
+        HealthBarAnim = HealthBar.GetComponent<Animator>();
         reloadButton.onClick.AddListener(() => commandQueue.TryEnqueueCommand(new ReloadCommand()));
         StartCoroutine(UpdateTask());
     }
@@ -47,6 +50,7 @@ public class LevelHUD : MonoBehaviour
                 {
                     case UpdateScoreCommand update:
                         {
+                            HealthBarAnim.SetInteger("Health", update.NewScore);
                             scoreText.text = $"Health: {update.NewScore}";
                             break;
                         }
