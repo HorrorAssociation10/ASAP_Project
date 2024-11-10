@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Jumper : MonoBehaviour
 {
-    [SerializeField] private float JumperPower = 1;
+    [SerializeField] private float JumperPower = 12.5f;
+    [SerializeField] private Vector2 jumpVector = new Vector2(0, 1);
     /*[SerializeField] private int PickupScore = 1;
     [SerializeField] private bool ObjectTaken;
 
@@ -21,7 +22,8 @@ public class Jumper : MonoBehaviour
         {
             //levelManager.UpdateScore(PickupScore);
             var body = collision.GetComponent<Rigidbody2D>();
-            body.AddForce(JumperPower*Vector2.up, ForceMode2D.Impulse);
+            body.velocity = jumpVector;
+            body.AddForce(JumperPower*jumpVector, ForceMode2D.Impulse);
             Debug.Log("Jumper Triggered!");
         }
     }

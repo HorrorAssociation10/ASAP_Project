@@ -18,6 +18,7 @@ public class CutsceneHUD : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private int DialoguesAmount;
     [SerializeField] private bool ChangeSceneOnFinish = false;
+    [SerializeField] private string TargetScene;
     [SerializeField] private PlayerInput actualPlayerInput;
 
     private int currentDialogue = 1;
@@ -73,7 +74,7 @@ public class CutsceneHUD : MonoBehaviour
                             {
                                 if (ChangeSceneOnFinish)
                                 {
-                                    SceneManager.LoadSceneAsync("Level1");
+                                    SceneManager.LoadSceneAsync(TargetScene);
                                 }
                                 else
                                 {

@@ -69,7 +69,7 @@ public class MovementController : MonoBehaviour
             if (isGrounded)
             {
                 body.AddForce(movementInput * Vector2.right * Speed);
-                animator.SetFloat("Speed", walking);
+                animator.SetFloat("Speed", Mathf.Abs(body.velocity.x));
             }
         }
         else
@@ -77,7 +77,7 @@ public class MovementController : MonoBehaviour
             if (isGrounded)
             {
                 body.AddForce(movementInput * Vector2.right * Speed);
-                animator.SetFloat("Speed", walking);
+                animator.SetFloat("Speed", Mathf.Abs(body.velocity.x));
             }
             else
                 body.AddForce(movementInput * Vector2.right * Speed);
