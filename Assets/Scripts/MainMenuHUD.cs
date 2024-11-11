@@ -12,6 +12,7 @@ public class MainMenuHUD : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private Button reloadButton;
     [SerializeField] private Button newGameButton;
+    [SerializeField] private Button quitButton;
     [SerializeField] private string TargetScene;
 
     private readonly UICommandQueue commandQueue = new UICommandQueue();
@@ -21,6 +22,7 @@ public class MainMenuHUD : MonoBehaviour
         Debug.Log("void Start executed");
         reloadButton.onClick.AddListener(() => commandQueue.TryEnqueueCommand(new ReloadCommand()));
         newGameButton.onClick.AddListener(() => commandQueue.TryEnqueueCommand(new NewGameCommand()));
+        quitButton.onClick.AddListener(() => commandQueue.TryEnqueueCommand(new GameQuitCommand()));
         StartCoroutine(UpdateTask());
         TargetScene = The.Instance.Checkpoint;
     }
@@ -48,6 +50,12 @@ public class MainMenuHUD : MonoBehaviour
                             SceneManager.LoadSceneAsync(TargetScene);
                             break;
                         }
+                    case GameQuitCommand quitgame:
+                        {
+                            Debug.Log("Game closed successfully");
+                            Application.Quit();
+                            break;
+                        }
                     default:
                         {
                             Debug.Log($"Unknown Command {command.GetType()}");
@@ -55,7 +63,6 @@ public class MainMenuHUD : MonoBehaviour
                         }
                 }
             }
-
             yield return null;
         }
     }

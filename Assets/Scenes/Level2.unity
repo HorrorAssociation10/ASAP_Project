@@ -822,6 +822,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9155125334588172345, guid: 96b868b34e6b3564eb0050055f3963b4, type: 3}
+      propertyPath: m_Actions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 208b0c6c0c9bfbe49aead12e06043366, type: 3}
     - target: {fileID: 9206792945954300725, guid: 96b868b34e6b3564eb0050055f3963b4, type: 3}
       propertyPath: m_Name
       value: PlayerExample
@@ -9213,6 +9217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   calledDialogue: {fileID: 548593170}
+  extraAnmtr: {fileID: 0}
 --- !u!61 &1669447332
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -34678,6 +34683,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 370910230813845522, guid: 19746c8c2237de845a63ec01b4413606, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5194532480591863927, guid: 19746c8c2237de845a63ec01b4413606, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
